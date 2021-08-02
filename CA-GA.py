@@ -21,14 +21,6 @@ def unpack_para(parameter1):
     d = int(parameter1[110:120], 2)
     return Pei, Piq, Pir, Pqr, Pe, Pi, Pb, Tei, Tiq, Tqr, Tir, d
 
-
-def B2i(string, powers):
-    string = list(string)
-    string = np.array(string, dtype=int)
-    i = np.multiply(powers, string)
-    return i
-
-
 def crossingover(parameters):
     index = np.arange(np.size(parameters))
     index1 = index + 1
@@ -104,41 +96,11 @@ def parameter_gen(n):
     return fitness
 
 
-def u1npack_para(parameter1):
-    powers = np.flip(2 ** np.arange(10))
-    Pei = B2i(parameter1[0:10], powers) / 1000
-    Piq = B2i(parameter1[10:20], powers) / 1000
-    Pir = B2i(parameter1[20:30], powers) / 1000
-    Pqr = B2i(parameter1[30:40], powers) / 1000
-    Pe = B2i(parameter1[40:50], powers) / 1000
-    Pi = B2i(parameter1[50:60], powers) / 1000
-    Pb = B2i(parameter1[60:70], powers) / 1000
-    Tei = B2i(parameter1[70:80], powers)
-    Tiq = B2i(parameter1[80:90], powers)
-    Tqr = B2i(parameter1[90:100], powers)
-    Tir = B2i(parameter1[100:110], powers)
-    d = B2i(parameter1[110:120], powers)
-    return Pei, Piq, Pir, Pqr, Pe, Pi, Pb, Tei, Tiq, Tqr, Tir, d
-
-
 def popn_generation(z):
     proportions = [0.6896 - (z/10000), 0.31, 0.0003, 0.0001, (z/10000), 0]
     population = [0, 1, 2, 3, 4, 5]
     popn = np.random.choice(a=population, p=proportions, size=(100, 100), replace=True)
     return popn
-
-
-def neighborsv(i, j, d, Pe, Pi, population1, neighborhoods):
-    ne = (population1.take(range(i - d, i + d + 1), axis=0, mode='wrap').take(range(j - d, j + d + 1), axis=1,
-                                                                              mode='wrap'))
-    neighborhoods[i, j] = (1 - ((1 - Pi) ** (np.count_nonzero(ne == 3)) * (1 - Pe) ** (np.count_nonzero(ne == 2))))
-    return
-
-
-def nebor(population1, i, j, d, Pe, Pi):
-    ne = (population1.take(range(i - d, i + d + 1), axis=0, mode='wrap').take(range(j - d, j + d + 1), axis=1,
-                                                                              mode='wrap'))
-    return 1 - ((1 - Pi) ** (np.count_nonzero(ne == 3)) * (1 - Pe) ** (np.count_nonzero(ne == 2)))
 
 
 def nebor2(population1, i, j, d, Pe, Pi):
@@ -186,9 +148,6 @@ def CA(parameter, real_q, population1, Pei, Piq, Pir, Pqr, Pe, Pi, Pb, Tei, Tiq,
     total = np.count_nonzero(population == 1) + np.count_nonzero(population == 2) + np.count_nonzero(population == 3)
     x, y = population.shape
     for t in range(0, modeled_q1.size):
-        # neighborhoods = neighborsv(x, y, d, Pe, Pi, population, neighborhoods)
-        # print(np.count_nonzero(population == 1), np.count_nonzero(population == 2), np.count_nonzero(population == 3),
-        #       np.count_nonzero(population == 4), np.count_nonzero(population == 5))
         z = 0
         for i in range(0, x):
             for j in range(0, y):
@@ -219,8 +178,6 @@ def main(real_q):
     population1 = popn_generation(real_q[0])
     parameters = parameter_gen(30)
     neighborhoods = np.zeros_like(population1, dtype=float)
-    # neighbors_vec = np.vectorize(neighborsv, otypes=[], excluded={2, 3, 4, 5, 6})
-    # vecCond = np.vectorize(vCond, otypes=[np.ndarray, np.ndarray])
     parameter = parameters['gene']
     z = np.count_nonzero(population1 == 4)
     for t in range(0, 10):
@@ -248,7 +205,7 @@ def main(real_q):
     return parameters
 
 
-df = pd.read_csv("lol.csv", usecols=['Confirmed'])
+df = pd.read_csv("data.csv", usecols=['Confirmed'])
 real_q = df["Confirmed"].to_numpy()
 parameters = main(real_q)
 print(parameters[-1])
