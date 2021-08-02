@@ -13,3 +13,4 @@ Here are some of the examples produced by the model, calibrated to data for Nepa
 ![nice](https://user-images.githubusercontent.com/73707418/127877375-c2a80a61-440f-4ff0-b17e-5204e788aebb.gif)
 ![modeld vs real](https://user-images.githubusercontent.com/73707418/127877482-1a12e188-d7cc-4acf-8db4-726c0beeede8.png)
 
+Read the full article on this here : https://bioneer-np.com/2021/07/22/spatial-covid-model/
