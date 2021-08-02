@@ -101,11 +101,11 @@ def CA(parameter, real_q, population1, Pei, Piq, Pir, Pqr, Pe, Pi, Pb, Tei, Tiq,
     return modeled_q,im
 
 
-df = pd.read_csv("lol.csv", usecols=['Confirmed'])
+df = pd.read_csv("data.csv", usecols=['Confirmed'])
 real_q = df["Confirmed"].to_numpy()
 parameters= 1
 population1 = popn_generation(real_q[0])
-parameter = '110000011101101011101111100100000001100010001101110000101100110010010000000001100000001011000001101100010111000000000001'
+parameter = input("Enter Parameters: ")
 Pei, Piq, Pir, Pqr, Pe, Pi, Pb, Tei, Tiq, Tqr, Tir, d = unpack_para(parameter)
 print(Pei, Piq, Pir, Pqr, Pe, Pi, Pb, Tei, Tiq, Tqr, Tir, d )
 modeled_q,im = CA(parameter, real_q, population1, Pei, Piq, Pir, Pqr, Pe, Pi, Pb, Tei, Tiq, Tqr, Tir, d)
@@ -122,7 +122,6 @@ real_q = temp
 print(modeled_q.shape)
 print(modeled_q)
 print(real_q)
-# print(np.sum(abs(modeled_q-real_q)))
 plt.plot(y,real_q,'o', label = "real_q")
 plt.plot(y,modeled_q, label = "modeled_q")
 temp_data = open("model.csv", "w+")
