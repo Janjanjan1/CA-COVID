@@ -182,20 +182,8 @@ def main(real_q):
         parameters = crossingover(parameters)
     return parameters
 
-def tr(real_q):
-    popn = popn_generation(real_q[0])
-    z = np.count_nonzero(popn == 4)
-    total = np.count_nonzero(popn > 0)
-    modeled_q = np.zeros_like(real_q)
-    modeled_q[-1] = z
-    print(modeled_q.size)
-    p = unpack_para('000000010111111110101010111100011000010001000111001010101000110010110000000001000000000000111100001100010111110000001001')
-    modeled_q1 = loop(popn.copy(),modeled_q.copy(),p,total)
-    print(fitness_func(modeled_q1, real_q))
-    return 
 
-
-df = pd.read_csv("lol.csv", usecols=['Confirmed'])
+df = pd.read_csv("data.csv", usecols=['Confirmed'])
 real_q = df["Confirmed"].to_numpy()
-parameters = main(real_q[0:110])
+parameters = main(real_q)
 # tr(real_q)
