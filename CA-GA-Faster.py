@@ -186,4 +186,4 @@ def main(real_q):
 df = pd.read_csv("data.csv", usecols=['Confirmed'])
 real_q = df["Confirmed"].to_numpy()
 parameters = main(real_q)
-# tr(real_q)
+
